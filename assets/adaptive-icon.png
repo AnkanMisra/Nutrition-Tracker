@@ -1,0 +1,35 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Foreground (will be masked by Android) -->
+  <g transform="translate(150, 150)">
+    <!-- Apple icon -->
+    <g transform="translate(100, 100)">
+      <!-- Apple body -->
+      <path d="M362 150 C500 150, 600 250, 600 400 C600 550, 500 650, 362 650 C224 650, 124 550, 124 400 C124 250, 224 150, 362 150 Z" fill="#6200ee"/>
+
+      <!-- Apple bite -->
+      <path d="M500 250 C550 250, 590 290, 590 340 C590 390, 550 430, 500 430 C450 430, 410 390, 410 340 C410 290, 450 250, 500 250 Z" fill="#ffffff"/>
+
+      <!-- Apple stem -->
+      <rect x="355" y="100" width="14" height="60" fill="#4caf50" rx="7"/>
+
+      <!-- Apple leaf -->
+      <ellipse cx="390" cy="120" rx="25" ry="15" fill="#4caf50" transform="rotate(30 390 120)"/>
+    </g>
+
+    <!-- Nutrition indicators -->
+    <g transform="translate(50, 500)">
+      <!-- Small nutrition dots -->
+      <circle cx="100" cy="50" r="25" fill="#ff5722" opacity="0.8"/>
+      <text x="100" y="58" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">P</text>
+
+      <circle cx="200" cy="50" r="25" fill="#ff9800" opacity="0.8"/>
+      <text x="200" y="58" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">C</text>
+
+      <circle cx="300" cy="50" r="25" fill="#ffc107" opacity="0.8"/>
+      <text x="300" y="58" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">F</text>
+
+      <circle cx="400" cy="50" r="25" fill="#e91e63" opacity="0.8"/>
+      <text x="400" y="58" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Cal</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg width="1284" height="2778" viewBox="0 0 1284 2778" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1284" height="2778" fill="#ffffff"/>
+
+  <!-- Main content centered -->
+  <g transform="translate(142, 1000)">
+    <!-- App icon -->
+    <g transform="scale(0.8)">
+      <!-- Background circle -->
+      <circle cx="500" cy="300" r="200" fill="#6200ee"/>
+
+      <!-- Apple icon -->
+      <g transform="translate(350, 200)">
+        <!-- Apple body -->
+        <path d="M150 50 C225 50, 275 100, 275 175 C275 250, 225 300, 150 300 C75 300, 25 250, 25 175 C25 100, 75 50, 150 50 Z" fill="#ffffff"/>
+
+        <!-- Apple bite -->
+        <path d="M225 100 C250 100, 270 120, 270 145 C270 170, 250 190, 225 190 C200 190, 180 170, 180 145 C180 120, 200 100, 225 100 Z" fill="#6200ee"/>
+
+        <!-- Apple stem -->
+        <rect x="145" y="30" width="10" height="30" fill="#4caf50" rx="5"/>
+
+        <!-- Apple leaf -->
+        <ellipse cx="165" cy="40" rx="15" ry="8" fill="#4caf50" transform="rotate(30 165 40)"/>
+      </g>
+    </g>
+
+    <!-- App title -->
+    <text x="500" y="600" text-anchor="middle" fill="#6200ee" font-family="Arial, sans-serif" font-size="64" font-weight="bold">Nutrition</text>
+    <text x="500" y="680" text-anchor="middle" fill="#6200ee" font-family="Arial, sans-serif" font-size="64" font-weight="bold">Tracker</text>
+
+    <!-- Subtitle -->
+    <text x="500" y="750" text-anchor="middle" fill="#666666" font-family="Arial, sans-serif" font-size="24">Track your daily nutrition</text>
+
+    <!-- Loading indicator -->
+    <g transform="translate(450, 820)">
+      <circle cx="25" cy="25" r="8" fill="#6200ee" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+      </circle>
+      <circle cx="50" cy="25" r="8" fill="#6200ee" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+      <circle cx="75" cy="25" r="8" fill="#6200ee" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" begin="1s"/>
+      </circle>
+    </g>
+  </g>
+</svg>

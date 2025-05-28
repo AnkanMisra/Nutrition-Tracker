@@ -1,0 +1,38 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#6200ee" rx="180"/>
+
+  <!-- Apple icon -->
+  <g transform="translate(200, 150)">
+    <!-- Apple body -->
+    <path d="M312 150 C450 150, 550 250, 550 400 C550 550, 450 650, 312 650 C174 650, 74 550, 74 400 C74 250, 174 150, 312 150 Z" fill="#ffffff"/>
+
+    <!-- Apple bite -->
+    <path d="M450 250 C500 250, 540 290, 540 340 C540 390, 500 430, 450 430 C400 430, 360 390, 360 340 C360 290, 400 250, 450 250 Z" fill="#6200ee"/>
+
+    <!-- Apple stem -->
+    <rect x="305" y="100" width="14" height="60" fill="#4caf50" rx="7"/>
+
+    <!-- Apple leaf -->
+    <ellipse cx="340" cy="120" rx="25" ry="15" fill="#4caf50" transform="rotate(30 340 120)"/>
+  </g>
+
+  <!-- Nutrition symbols -->
+  <g transform="translate(150, 600)">
+    <!-- Protein (P) -->
+    <circle cx="100" cy="100" r="40" fill="#ff5722" opacity="0.9"/>
+    <text x="100" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="32" font-weight="bold">P</text>
+
+    <!-- Carbs (C) -->
+    <circle cx="250" cy="100" r="40" fill="#ff9800" opacity="0.9"/>
+    <text x="250" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="32" font-weight="bold">C</text>
+
+    <!-- Fat (F) -->
+    <circle cx="400" cy="100" r="40" fill="#ffc107" opacity="0.9"/>
+    <text x="400" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="32" font-weight="bold">F</text>
+
+    <!-- Calories -->
+    <circle cx="550" cy="100" r="40" fill="#e91e63" opacity="0.9"/>
+    <text x="550" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">Cal</text>
+  </g>
+</svg>
