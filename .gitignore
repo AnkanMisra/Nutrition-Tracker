@@ -72,3 +72,4 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+package.json
