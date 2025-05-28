@@ -1,8 +1,10 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import {
   Alert,
   Animated,
   FlatList,
+  ListRenderItem,
   StyleSheet,
   View
 } from 'react-native';
@@ -15,18 +17,22 @@ import {
   Text
 } from 'react-native-paper';
 import { searchFoods } from '../services/foodApi';
+import { FoodSearchResult, RootStackParamList } from '../types';
 
-const SearchScreen = (props) => {
-  // Safely extract navigation from props with fallback
-  const navigation = props?.navigation || {};
+type SearchScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Search'>;
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
+interface Props {
+  navigation: SearchScreenNavigationProp;
+}
+
+const SearchScreen: React.FC<Props> = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<FoodSearchResult[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
 
   // Handle search
-  const handleSearch = async () => {
+  const handleSearch = async (): Promise<void> => {
     if (!searchQuery.trim()) {
       Alert.alert('Error', 'Please enter a food name to search');
       return;
@@ -38,7 +44,7 @@ const SearchScreen = (props) => {
     try {
       const results = await searchFoods(searchQuery.trim());
       setSearchResults(results);
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert('Error', error.message || 'Failed to search foods');
       setSearchResults([]);
     } finally {
@@ -47,20 +53,16 @@ const SearchScreen = (props) => {
   };
 
   // Handle food selection
-  const handleFoodSelect = (food) => {
+  const handleFoodSelect = (food: FoodSearchResult): void => {
     try {
-      if (navigation && typeof navigation.navigate === 'function') {
-        navigation.navigate('FoodDetails', { food });
-      } else {
-        console.error('Navigation is not available');
-      }
+      navigation.navigate('FoodDetails', { food });
     } catch (error) {
       console.error('Error navigating to food details:', error);
     }
   };
 
   // Render empty state based on search status
-  const renderEmptyState = () => {
+  const renderEmptyState = (): React.ReactElement => {
     if (loading) {
       return (
         <View style={styles.centerContainer}>
@@ -87,16 +89,15 @@ const SearchScreen = (props) => {
   };
 
   // Render search result item
-  const renderFoodItem = ({ item, index }) => {
+  const renderFoodItem: ListRenderItem<FoodSearchResult> = ({ item, index }) => {
     // Add a slight delay to each item for a staggered animation effect
-    const animationDelay = index * 50;
+    const animationDelay = (index || 0) * 50;
 
     return (
       <Animated.View
         style={{
           opacity: 1,
           transform: [{ translateY: 0 }],
-          animationDelay: `${animationDelay}ms`
         }}
       >
         <Surface style={styles.itemSurface}>
@@ -170,7 +171,7 @@ const SearchScreen = (props) => {
       <Card style={styles.noteCard}>
         <Card.Content>
           <Text style={styles.noteText}>
-            💡 Tip: This app uses the USDA FoodData Central API. For better results, replace 'DEMO_KEY' with your free API key in src/services/foodApi.js
+            💡 Tip: This app uses the USDA FoodData Central API. For better results, replace 'DEMO_KEY' with your free API key in src/services/foodApi.ts
           </Text>
         </Card.Content>
       </Card>
@@ -306,4 +307,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SearchScreen;
+export default SearchScreen; 
