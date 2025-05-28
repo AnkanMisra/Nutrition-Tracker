@@ -1,4 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useCallback, useState } from 'react';
 import {
   Alert,
@@ -19,11 +20,25 @@ import {
   Title
 } from 'react-native-paper';
 import { clearTodayLog, getTodayLog, removeFoodFromLog } from '../utils/storage';
+import { ConsumedFood, RootStackParamList } from '../types';
 
-const HomeScreen = ({ navigation }) => {
-  const [foodLog, setFoodLog] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const [totals, setTotals] = useState({
+interface NutritionTotals {
+  calories: number;
+  protein: number;
+  carbohydrates: number;
+  fat: number;
+}
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+interface Props {
+  navigation: HomeScreenNavigationProp;
+}
+
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  const [foodLog, setFoodLog] = useState<ConsumedFood[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [totals, setTotals] = useState<NutritionTotals>({
     calories: 0,
     protein: 0,
     carbohydrates: 0,
@@ -31,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
   });
 
   // Load today's food log
-  const loadFoodLog = async () => {
+  const loadFoodLog = async (): Promise<void> => {
     try {
       const log = await getTodayLog();
       setFoodLog(log);
@@ -42,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Calculate nutrition totals
-  const calculateTotals = (log) => {
+  const calculateTotals = (log: ConsumedFood[]): void => {
     const newTotals = log.reduce(
       (acc, food) => ({
         calories: acc.calories + (food.calculatedNutrients?.calories || 0),
@@ -62,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Remove food from log
-  const handleRemoveFood = async (foodId) => {
+  const handleRemoveFood = async (foodId: string): Promise<void> => {
     try {
       const updatedLog = await removeFoodFromLog(foodId);
       setFoodLog(updatedLog);
@@ -73,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Clear entire log
-  const handleClearLog = () => {
+  const handleClearLog = (): void => {
     Alert.alert(
       'Clear Daily Log',
       'Are you sure you want to clear all foods from today\'s log?',
@@ -97,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   // Refresh handler
-  const onRefresh = useCallback(async () => {
+  const onRefresh = useCallback(async (): Promise<void> => {
     setRefreshing(true);
     await loadFoodLog();
     setRefreshing(false);
@@ -110,7 +125,7 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
-  const getTodayDate = () => {
+  const getTodayDate = (): string => {
     return new Date().toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
@@ -184,13 +199,13 @@ const HomeScreen = ({ navigation }) => {
                 </Paragraph>
               </View>
             ) : (
-              foodLog.map((food, index) => (
+              foodLog.map((food) => (
                 <Surface key={food.id} style={styles.foodItemSurface}>
                   <List.Item
-                    title={<Text style={styles.foodItemTitle}>{food.description}</Text>}
+                    title={<Text style={styles.foodItemTitle}>{food.food.description}</Text>}
                     description={
                       <View style={styles.foodItemDetails}>
-                        <Text style={styles.foodItemQuantity}>{food.quantity}{food.servingSizeUnit}</Text>
+                        <Text style={styles.foodItemQuantity}>{food.quantity}{food.food.servingSizeUnit}</Text>
                         <Text style={styles.foodItemCalories}>{food.calculatedNutrients?.calories || 0} cal</Text>
                       </View>
                     }
@@ -354,4 +369,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+export default HomeScreen; 

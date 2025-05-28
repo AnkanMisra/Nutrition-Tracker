@@ -1,3 +1,5 @@
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
@@ -17,14 +19,23 @@ import {
 } from 'react-native-paper';
 import { calculateNutrition, getFoodDetails } from '../services/foodApi';
 import { addFoodToLog } from '../utils/storage';
+import { FoodItem, FoodSearchResult, Nutrients, RootStackParamList } from '../types';
 
-const FoodDetailsScreen = ({ route, navigation }) => {
+type FoodDetailsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FoodDetails'>;
+type FoodDetailsScreenRouteProp = RouteProp<RootStackParamList, 'FoodDetails'>;
+
+interface Props {
+  navigation: FoodDetailsScreenNavigationProp;
+  route: FoodDetailsScreenRouteProp;
+}
+
+const FoodDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
   const { food } = route.params;
-  const [foodDetails, setFoodDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState('100');
-  const [calculatedNutrients, setCalculatedNutrients] = useState(null);
-  const [adding, setAdding] = useState(false);
+  const [foodDetails, setFoodDetails] = useState<FoodItem | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [quantity, setQuantity] = useState<string>('100');
+  const [calculatedNutrients, setCalculatedNutrients] = useState<Nutrients | null>(null);
+  const [adding, setAdding] = useState<boolean>(false);
 
   // Load food details when component mounts
   useEffect(() => {
@@ -44,11 +55,11 @@ const FoodDetailsScreen = ({ route, navigation }) => {
   }, [foodDetails, quantity]);
 
   // Load detailed nutrition information
-  const loadFoodDetails = async () => {
+  const loadFoodDetails = async (): Promise<void> => {
     try {
       const details = await getFoodDetails(food.fdcId);
       setFoodDetails(details);
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert('Error', error.message || 'Failed to load food details');
       navigation.goBack();
     } finally {
@@ -57,9 +68,14 @@ const FoodDetailsScreen = ({ route, navigation }) => {
   };
 
   // Add food to daily log
-  const handleAddToLog = async () => {
+  const handleAddToLog = async (): Promise<void> => {
     if (!quantity || parseFloat(quantity) <= 0) {
       Alert.alert('Error', 'Please enter a valid quantity');
+      return;
+    }
+
+    if (!foodDetails || !calculatedNutrients) {
+      Alert.alert('Error', 'Food details not loaded');
       return;
     }
 
@@ -67,12 +83,9 @@ const FoodDetailsScreen = ({ route, navigation }) => {
 
     try {
       const foodToAdd = {
-        fdcId: foodDetails.fdcId,
-        description: foodDetails.description,
-        brandOwner: foodDetails.brandOwner,
+        food: foodDetails,
         quantity: parseFloat(quantity),
-        servingSizeUnit: foodDetails.servingSizeUnit,
-        originalNutrients: foodDetails.nutrients,
+        consumedAt: new Date().toISOString(),
         calculatedNutrients: calculatedNutrients
       };
 
@@ -361,4 +374,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FoodDetailsScreen;
+export default FoodDetailsScreen; 

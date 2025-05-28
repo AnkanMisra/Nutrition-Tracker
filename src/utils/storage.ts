@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { ConsumedFood } from '../types';
 
 const DAILY_LOG_KEY = 'daily_food_log';
 
 // Get today's date in YYYY-MM-DD format
-const getTodayKey = () => {
+const getTodayKey = (): string => {
   const today = new Date();
   return today.toISOString().split('T')[0];
 };
@@ -13,7 +14,7 @@ const getTodayKey = () => {
 const isWeb = Platform.OS === 'web';
 
 // Get today's food log
-export const getTodayLog = async () => {
+export const getTodayLog = async (): Promise<ConsumedFood[]> => {
   try {
     const todayKey = getTodayKey();
     const jsonValue = await AsyncStorage.getItem(`${DAILY_LOG_KEY}_${todayKey}`);
@@ -38,7 +39,7 @@ export const getTodayLog = async () => {
 };
 
 // Save today's food log
-export const saveTodayLog = async (foodLog) => {
+export const saveTodayLog = async (foodLog: ConsumedFood[]): Promise<void> => {
   try {
     const todayKey = getTodayKey();
     const jsonValue = JSON.stringify(foodLog);
@@ -68,10 +69,11 @@ export const saveTodayLog = async (foodLog) => {
 };
 
 // Add food to today's log
-export const addFoodToLog = async (food) => {
+export const addFoodToLog = async (food: Omit<ConsumedFood, 'id'>): Promise<ConsumedFood[]> => {
   try {
     const currentLog = await getTodayLog();
-    const newLog = [...currentLog, { ...food, id: Date.now().toString() }];
+    const newFood: ConsumedFood = { ...food, id: Date.now().toString() };
+    const newLog = [...currentLog, newFood];
     await saveTodayLog(newLog);
     return newLog;
   } catch (e) {
@@ -81,7 +83,7 @@ export const addFoodToLog = async (food) => {
 };
 
 // Remove food from today's log
-export const removeFoodFromLog = async (foodId) => {
+export const removeFoodFromLog = async (foodId: string): Promise<ConsumedFood[]> => {
   try {
     const currentLog = await getTodayLog();
     const newLog = currentLog.filter(food => food.id !== foodId);
@@ -94,7 +96,7 @@ export const removeFoodFromLog = async (foodId) => {
 };
 
 // Clear today's log
-export const clearTodayLog = async () => {
+export const clearTodayLog = async (): Promise<ConsumedFood[]> => {
   try {
     const todayKey = getTodayKey();
     await AsyncStorage.removeItem(`${DAILY_LOG_KEY}_${todayKey}`);
@@ -124,4 +126,4 @@ export const clearTodayLog = async () => {
 
     return [];
   }
-};
+}; 

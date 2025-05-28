@@ -3,19 +3,26 @@
 const API_KEY = 'DEMO_KEY';
 const BASE_URL = 'https://api.nal.usda.gov/fdc/v1';
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { 
+  FoodSearchResult, 
+  FoodItem, 
+  Nutrients, 
+  USDASearchResponse, 
+  USDAFoodResponse 
+} from '../types';
 
 // Search for foods with retry logic
-export const searchFoods = async (query) => {
+export const searchFoods = async (query: string): Promise<FoodSearchResult[]> => {
   // Maximum number of retry attempts
   const MAX_RETRIES = 2;
   let retries = 0;
 
   // Retry function
-  const attemptSearch = async () => {
+  const attemptSearch = async (): Promise<FoodSearchResult[]> => {
     try {
       // Using POST request as recommended in the API documentation
-      const response = await axios.post(
+      const response: AxiosResponse<USDASearchResponse> = await axios.post(
         `${BASE_URL}/foods/search?api_key=${API_KEY}`,
         {
           query: query,
@@ -38,7 +45,7 @@ export const searchFoods = async (query) => {
         servingSize: food.servingSize || 100,
         servingSizeUnit: food.servingSizeUnit || 'g'
       }));
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error searching foods:', error);
 
       // Check if we should retry
@@ -81,9 +88,9 @@ export const searchFoods = async (query) => {
 };
 
 // Get detailed nutrition information for a specific food
-export const getFoodDetails = async (fdcId) => {
+export const getFoodDetails = async (fdcId: number): Promise<FoodItem> => {
   try {
-    const response = await axios.get(`${BASE_URL}/food/${fdcId}`, {
+    const response: AxiosResponse<USDAFoodResponse> = await axios.get(`${BASE_URL}/food/${fdcId}`, {
       params: {
         api_key: API_KEY
       },
@@ -91,7 +98,7 @@ export const getFoodDetails = async (fdcId) => {
     });
 
     const food = response.data;
-    const nutrients = {};
+    const nutrients: Partial<Nutrients> = {};
 
     // Extract key nutrients
     food.foodNutrients.forEach(nutrient => {
@@ -131,14 +138,14 @@ export const getFoodDetails = async (fdcId) => {
         sodium: nutrients.sodium || 0
       }
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error getting food details:', error);
     throw new Error('Failed to get food details. Please try again.');
   }
 };
 
 // Calculate nutrition for a specific quantity
-export const calculateNutrition = (foodNutrients, quantity, servingSize = 100) => {
+export const calculateNutrition = (foodNutrients: Nutrients, quantity: number, servingSize: number = 100): Nutrients => {
   const multiplier = quantity / servingSize;
 
   return {
@@ -150,4 +157,4 @@ export const calculateNutrition = (foodNutrients, quantity, servingSize = 100) =
     sugar: Math.round(foodNutrients.sugar * multiplier * 100) / 100,
     sodium: Math.round(foodNutrients.sodium * multiplier * 100) / 100
   };
-};
+}; 
