@@ -4,10 +4,10 @@
     "slug": "nutrition-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.svg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,23 +22,20 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon.svg",
         "backgroundColor": "#FFFFFF"
       },
       "permissions": [
         "android.permission.CAMERA"
       ],
-      "package": "com.ankanmisra.nutritiontracker",
-      "compileSdkVersion": 34,
-      "targetSdkVersion": 34,
-      "minSdkVersion": 21
+      "package": "com.ankanmisra.nutritiontracker"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.svg"
     },
     "plugins": [
       [
-        "expo-barcode-scanner",
+        "expo-camera",
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access camera to scan food barcodes."
         }
