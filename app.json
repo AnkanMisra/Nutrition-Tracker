@@ -27,7 +27,11 @@
       },
       "permissions": [
         "android.permission.CAMERA"
-      ]
+      ],
+      "package": "com.ankanmisra.nutritiontracker",
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 21
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +43,11 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access camera to scan food barcodes."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "07d77027-1948-421b-8880-5f55b19a0a5c"
+      }
+    }
   }
 }
