@@ -3,6 +3,7 @@ export type RootStackParamList = {
   Home: undefined;
   Search: undefined;
   FoodDetails: { food: FoodSearchResult };
+  BarcodeScanner: undefined;
 };
 
 // Food API types
@@ -96,4 +97,23 @@ export interface FoodCardProps {
 export interface SearchResultProps {
   food: FoodSearchResult;
   onPress: () => void;
+}
+
+export interface ThemeContextType {
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+  colors: {
+    background: string;
+    surface: string;
+    text: string;
+    textSecondary: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    border: string;
+    card: string;
+    error: string;
+    success: string;
+    warning: string;
+  };
 } 

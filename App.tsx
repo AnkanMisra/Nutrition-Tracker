@@ -9,123 +9,126 @@ import { DefaultTheme, Provider as PaperProvider, MD3Theme } from 'react-native-
 import FoodDetailsScreen from './src/screens/FoodDetailsScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
 
-// Import types
+// Import types and context
 import { RootStackParamList } from './src/types';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-// Create a custom theme based on DefaultTheme
-const theme: MD3Theme = {
+// Create dynamic themes
+const createTheme = (isDarkMode: boolean): MD3Theme => ({
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#6200ee',
+    primary: isDarkMode ? '#3B82F6' : '#0066CC',
     onPrimary: '#ffffff',
-    primaryContainer: '#bb86fc',
-    onPrimaryContainer: '#000000',
-    secondary: '#03dac4',
-    onSecondary: '#000000',
-    secondaryContainer: '#03dac4',
-    onSecondaryContainer: '#000000',
-    tertiary: '#03dac4',
-    onTertiary: '#000000',
-    tertiaryContainer: '#03dac4',
-    onTertiaryContainer: '#000000',
-    error: '#d32f2f',
+    primaryContainer: isDarkMode ? '#1E3A8A' : '#E3F2FD',
+    onPrimaryContainer: isDarkMode ? '#93C5FD' : '#0066CC',
+    secondary: '#10B981',
+    onSecondary: '#ffffff',
+    secondaryContainer: isDarkMode ? '#064E3B' : '#ECFDF5',
+    onSecondaryContainer: '#10B981',
+    tertiary: '#F59E0B',
+    onTertiary: '#ffffff',
+    tertiaryContainer: isDarkMode ? '#92400E' : '#FEF3C7',
+    onTertiaryContainer: '#F59E0B',
+    error: '#EF4444',
     onError: '#ffffff',
-    errorContainer: '#ffcdd2',
-    onErrorContainer: '#000000',
-    background: '#f5f5f5',
-    onBackground: '#333333',
-    surface: '#ffffff',
-    onSurface: '#333333',
-    surfaceVariant: '#f5f5f5',
-    onSurfaceVariant: '#333333',
-    outline: '#cccccc',
-    outlineVariant: '#e0e0e0',
+    errorContainer: isDarkMode ? '#7F1D1D' : '#FEE2E2',
+    onErrorContainer: '#EF4444',
+    background: isDarkMode ? '#0F172A' : '#F8FAFC',
+    onBackground: isDarkMode ? '#F8FAFC' : '#1E293B',
+    surface: isDarkMode ? '#1E293B' : '#FFFFFF',
+    onSurface: isDarkMode ? '#F8FAFC' : '#1E293B',
+    surfaceVariant: isDarkMode ? '#334155' : '#F1F5F9',
+    onSurfaceVariant: isDarkMode ? '#94A3B8' : '#64748B',
+    outline: isDarkMode ? '#475569' : '#CBD5E1',
+    outlineVariant: isDarkMode ? '#334155' : '#E2E8F0',
     shadow: '#000000',
     scrim: '#000000',
-    inverseSurface: '#333333',
-    inverseOnSurface: '#ffffff',
-    inversePrimary: '#bb86fc',
+    inverseSurface: isDarkMode ? '#F8FAFC' : '#1E293B',
+    inverseOnSurface: isDarkMode ? '#0F172A' : '#F8FAFC',
+    inversePrimary: isDarkMode ? '#0066CC' : '#60A5FA',
     elevation: {
       level0: 'transparent',
-      level1: 'rgb(247, 243, 249)',
-      level2: 'rgb(243, 237, 246)',
-      level3: 'rgb(238, 232, 244)',
-      level4: 'rgb(236, 230, 243)',
-      level5: 'rgb(233, 226, 240)',
+      level1: isDarkMode ? '#1E293B' : '#FFFFFF',
+      level2: isDarkMode ? '#334155' : '#F8FAFC',
+      level3: isDarkMode ? '#475569' : '#F1F5F9',
+      level4: isDarkMode ? '#64748B' : '#E2E8F0',
+      level5: isDarkMode ? '#94A3B8' : '#CBD5E1',
     },
-    surfaceDisabled: '#e0e0e0',
-    onSurfaceDisabled: '#999999',
-    backdrop: 'rgba(0, 0, 0, 0.5)',
+    surfaceDisabled: isDarkMode ? '#334155' : '#E2E8F0',
+    onSurfaceDisabled: isDarkMode ? '#64748B' : '#94A3B8',
+    backdrop: isDarkMode ? 'rgba(15, 23, 42, 0.8)' : 'rgba(15, 23, 42, 0.5)',
   },
-  roundness: 8,
-};
+  roundness: 12,
+});
 
-export default function App(): React.ReactElement {
+const AppContent: React.FC = () => {
+  const { isDarkMode } = useTheme();
+  const theme = createTheme(isDarkMode);
+
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <StatusBar style="light" backgroundColor="#5000c9" />
+        <StatusBar style={isDarkMode ? "light" : "dark"} backgroundColor={isDarkMode ? "#0F172A" : "#F8FAFC"} />
         <View style={Platform.OS === 'web' ? styles.webContainer : styles.mobileContainer}>
           <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
-              headerStyle: {
-                backgroundColor: '#6200ee',
-                elevation: 8,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 4,
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                fontSize: 20,
-              },
-              cardStyle: { backgroundColor: '#f5f5f5' },
-              headerBackTitleVisible: false,
+              headerShown: false,
+              cardStyle: { backgroundColor: isDarkMode ? '#0F172A' : '#F8FAFC' },
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
             }}
           >
             <Stack.Screen
               name="Home"
               component={HomeScreen}
-              options={{ title: 'Nutrition Tracker' }}
             />
             <Stack.Screen
               name="Search"
               component={SearchScreen}
-              options={{ title: 'Search Food' }}
             />
             <Stack.Screen
               name="FoodDetails"
               component={FoodDetailsScreen}
-              options={{ title: 'Food Details' }}
+            />
+            <Stack.Screen
+              name="BarcodeScanner"
+              component={BarcodeScannerScreen}
             />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
     </PaperProvider>
   );
+};
+
+export default function App(): React.ReactElement {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
 }
 
 const styles = StyleSheet.create({
   webContainer: {
     flex: 1,
-    maxWidth: 800,  // Limit width on web for better readability
+    maxWidth: 800,
     width: '100%',
     alignSelf: 'center',
     height: '100%',
     overflow: 'hidden',
-    borderRadius: Platform.OS === 'web' ? 8 : 0,
+    borderRadius: Platform.OS === 'web' ? 12 : 0,
     ...(Platform.OS === 'web' ? {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
+      shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.1,
-      shadowRadius: 10,
+      shadowRadius: 20,
     } : {}),
   },
   mobileContainer: {
