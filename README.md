@@ -1,8 +1,13 @@
-# 🥗 Nutrition Tracker
-
 <div align="center">
 
-![Nutrition Tracker Logo](./assets/icon.png)
+
+# 🥗 Nutrition Tracker
+
+
+
+<img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="300"/>
+
+
 
 **A powerful, modern MyFitnessPal alternative built with React Native & Expo**
 
@@ -17,6 +22,8 @@
 [📱 Download APK](releases) • [🎯 Live Demo](demo-link) • [📖 Documentation](docs) • [🐛 Report Bug](issues) • [💡 Request Feature](issues)
 
 ![App Preview](docs/images/app-preview.gif)
+</div>
+
 
 </div>
 
@@ -919,7 +926,8 @@ This project was inspired by:
 
 ### 🌟 Star this repository if you found it helpful!
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/nutrition-tracker.svg?style=social)](https://github.com/yourusername/nutrition-tracker/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/AnkanMisra/nutrition-tracker.svg?style=social)](https://github.com/AnkanMisra/nutrition-tracker/stargazers)
+
 
 **Made with ❤️ by developers who believe nutrition tracking shouldn't break the bank**
 
