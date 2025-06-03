@@ -926,7 +926,8 @@ This project was inspired by:
 
 ### 🌟 Star this repository if you found it helpful!
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/nutrition-tracker.svg?style=social)](https://github.com/yourusername/nutrition-tracker/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/AnkanMisra/nutrition-tracker.svg?style=social)](https://github.com/AnkanMisra/nutrition-tracker/stargazers)
+
 
 **Made with ❤️ by developers who believe nutrition tracking shouldn't break the bank**
 
