@@ -37,4 +37,3 @@ The README is already configured to display these images beautifully with:
 - 🎨 Organized layout
 - 📊 Feature highlights
 
-Your screenshots show a beautiful, professional app that rivals premium nutrition tracking apps! 
