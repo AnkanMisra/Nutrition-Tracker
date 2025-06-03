@@ -1,6 +1,7 @@
-// Note: You'll need to get a free API key from https://fdc.nal.usda.gov/api-key-signup.html
-// Temporarily using DEMO_KEY for testing as there might be an issue with the provided key
-const API_KEY = 'DEMO_KEY';
+// Food API service for USDA FoodData Central
+import { API_KEYS } from '../constants/api';
+
+const API_KEY = API_KEYS.USDA || 'DEMO_KEY';
 const BASE_URL = 'https://api.nal.usda.gov/fdc/v1';
 
 import axios, { AxiosResponse } from 'axios';

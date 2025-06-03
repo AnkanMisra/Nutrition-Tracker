@@ -199,7 +199,6 @@ export const API_CONFIG = {
 // API KEYS & SECRETS
 // ========================================
 
-// Note: These should be loaded from environment variables
 export const API_KEYS = {
   USDA: process.env.USDA_API_KEY || '',
   NUTRITIONIX: {

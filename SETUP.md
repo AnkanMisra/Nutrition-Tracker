@@ -46,14 +46,20 @@ npx expo start
 
 ### API Key Setup
 
-For better performance, get a free USDA API key:
+For better performance, configure your USDA API key:
 
 1. Visit: https://fdc.nal.usda.gov/api-key-signup.html
 2. Sign up for a free API key
-3. Replace `DEMO_KEY` in `src/services/foodApi.js` with your key:
+3. Copy `env.example` to `.env` and add your key:
 
-```javascript
-const API_KEY = 'YOUR_API_KEY_HERE';
+```bash
+cp env.example .env
+```
+
+4. Edit `.env` and replace the placeholder:
+
+```
+USDA_API_KEY=your_actual_api_key_here
 ```
 
 ### Troubleshooting

@@ -167,21 +167,10 @@ const SearchScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  // Get food type label
-  const getFoodTypeLabel = (dataType: string): string => {
-    switch (dataType) {
-      case 'Branded': return 'Brand';
-      case 'Foundation': return 'Basic';
-      case 'SR Legacy': return 'Legacy';
-      default: return 'Other';
-    }
-  };
-
   // Render search result item
   const renderFoodItem: ListRenderItem<FoodSearchResult> = ({ item, index }) => {
     const animationDelay = (index || 0) * 50;
     const typeColor = getFoodTypeColor(item.dataType);
-    const typeLabel = getFoodTypeLabel(item.dataType);
 
     return (
       <Animated.View
@@ -202,7 +191,14 @@ const SearchScreen: React.FC<Props> = ({ navigation }) => {
         ]}
       >
         <TouchableOpacity
-          style={[styles.foodItem, { backgroundColor: colors.card }]}
+          style={[
+            styles.foodItem, 
+            { 
+              backgroundColor: colors.card,
+              borderLeftWidth: 4,
+              borderLeftColor: typeColor,
+            }
+          ]}
           onPress={() => handleFoodSelect(item)}
           activeOpacity={0.7}
         >
@@ -217,13 +213,6 @@ const SearchScreen: React.FC<Props> = ({ navigation }) => {
                 </Text>
               )}
             </View>
-            <Chip
-              mode="flat"
-              style={[styles.typeChip, { backgroundColor: `${typeColor}15` }]}
-              textStyle={[styles.typeChipText, { color: typeColor }]}
-            >
-              {typeLabel}
-            </Chip>
           </View>
           <IconButton
             icon="chevron-right"
@@ -436,14 +425,6 @@ const styles = StyleSheet.create({
   foodItemBrand: {
     fontSize: 14,
     color: '#64748B',
-  },
-  typeChip: {
-    height: 24,
-    borderRadius: 12,
-  },
-  typeChipText: {
-    fontSize: 12,
-    fontWeight: '500',
   },
   chevronIcon: {
     margin: 0,
