@@ -4,7 +4,7 @@
 
 <img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="300"/>
 
-</div>
+
 
 **A powerful, modern MyFitnessPal alternative built with React Native & Expo**
 
@@ -19,6 +19,8 @@
 [📱 Download APK](releases) • [🎯 Live Demo](demo-link) • [📖 Documentation](docs) • [🐛 Report Bug](issues) • [💡 Request Feature](issues)
 
 ![App Preview](docs/images/app-preview.gif)
+</div>
+
 
 </div>
 
