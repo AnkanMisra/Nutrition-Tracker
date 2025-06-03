@@ -9,7 +9,7 @@
 
 
 
-**A powerful, modern MyFitnessPal alternative built with React Native & Expo**
+**A powerful, modern nutrional alternative built with React Native & Expo**
 
 *Because premium nutrition apps shouldn't cost $200/year when you can build your own* 💪
 
