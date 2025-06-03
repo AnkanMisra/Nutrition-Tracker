@@ -91,33 +91,50 @@
 
 <div align="center">
 
-### 📱 App Flow Demo
-![App Demo](docs/images/app-demo.gif)
+### 📱 Live App Screenshots
 
-### 🖼️ Screenshots Gallery
+> *Beautiful, modern nutrition tracking that rivals premium apps like MyFitnessPal*
 
 <table>
   <tr>
-    <td><img src="docs/images/home-screen.png" width="250" alt="Home Screen"/></td>
-    <td><img src="docs/images/search-screen.png" width="250" alt="Search Screen"/></td>
-    <td><img src="docs/images/food-details.png" width="250" alt="Food Details"/></td>
+    <td><img src="docs/images/home-dashboard.png" width="280" alt="Home Dashboard"/></td>
+    <td><img src="docs/images/food-search.png" width="280" alt="Food Search"/></td>
+    <td><img src="docs/images/food-details.png" width="280" alt="Food Details"/></td>
   </tr>
   <tr>
-    <td align="center"><strong>🏠 Home Dashboard</strong></td>
-    <td align="center"><strong>🔍 Food Search</strong></td>
-    <td align="center"><strong>📋 Food Details</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/images/progress-charts.png" width="250" alt="Progress Charts"/></td>
-    <td><img src="docs/images/meal-logging.png" width="250" alt="Meal Logging"/></td>
-    <td><img src="docs/images/barcode-scanner.png" width="250" alt="Barcode Scanner"/></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>📊 Progress Charts</strong></td>
-    <td align="center"><strong>🍽️ Meal Logging</strong></td>
-    <td align="center"><strong>📱 Barcode Scanner</strong></td>
+    <td align="center">
+      <strong>🏠 Daily Dashboard</strong><br/>
+      <em>Track calories & macros with beautiful circular progress indicators. Shows 0/2000 calories with remaining count.</em>
+    </td>
+    <td align="center">
+      <strong>🔍 Smart Food Search</strong><br/>
+      <em>Search 300k+ foods with recent searches chips. Quick access to "Apple", "Rice", "Chicken breast" etc.</em>
+    </td>
+    <td align="center">
+      <strong>📊 Detailed Nutrition</strong><br/>
+      <em>Complete nutrition facts for Broccoli with serving size controls (50g, 100g, 150g, 200g) and easy "Add to Log".</em>
+    </td>
   </tr>
 </table>
+
+### ✨ Key Features Showcase
+
+- **🎯 Goal Tracking**: Clean 2000 calorie daily goal with real-time remaining calories display
+- **📈 Macro Visualization**: Protein (0/150g), Carbs (0/250g), Fat (0/65g) displayed as intuitive circular progress rings  
+- **🍽️ Meal Organization**: Breakfast (0/500 cal), Lunch (0/600 cal) sections with individual targets
+- **🌙 Elegant Dark Theme**: Modern dark UI with blue accent colors and glassmorphism effects
+- **🔍 Search Intelligence**: Recent searches like "Apple", "Chicken breast", "Rice", "Banana", "Salmon" for quick access
+- **📱 Barcode Scanner**: Instant nutrition lookup via camera integration
+- **⚖️ Smart Serving Control**: Easy portion adjustment with preset buttons and custom input
+- **🏷️ Food Type Indicators**: Colored borders (Green=Brand, Blue=Foundation, Orange=Legacy) for food classification
+
+### 🎨 Design Highlights
+
+- **🌊 Glassmorphism Effects** - Modern frosted glass card designs
+- **🎭 Smooth Animations** - Delightful micro-interactions throughout
+- **📱 Mobile-first UI** - Optimized for one-handed operation
+- **♿ Accessibility** - High contrast ratios and screen reader support
+- **🎨 Consistent Theming** - Beautiful dark mode with blue primary colors
 
 </div>
 
