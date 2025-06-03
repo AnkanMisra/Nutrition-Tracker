@@ -2,7 +2,9 @@
 
 <div align="center">
 
-![Nutrition Tracker Logo](./assets/icon.png)
+<img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="100"/>
+
+</div>
 
 **A powerful, modern MyFitnessPal alternative built with React Native & Expo**
 
