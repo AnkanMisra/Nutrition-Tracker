@@ -1,6 +1,9 @@
+<div align="center">
+
+
 # 🥗 Nutrition Tracker
 
-<div align="center">
+
 
 <img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="300"/>
 
