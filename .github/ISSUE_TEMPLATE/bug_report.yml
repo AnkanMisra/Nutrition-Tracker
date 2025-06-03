@@ -1,0 +1,196 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve the app
+title: "[BUG] "
+labels: ["bug", "needs triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! 🙏
+        
+        Before submitting, please search existing issues to avoid duplicates.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-flight Checklist
+      description: Please confirm you have completed these steps
+      options:
+        - label: I have searched existing issues to ensure this bug hasn't been reported
+          required: true
+        - label: I have read the [Contributing Guidelines](../../CONTRIBUTING.md)
+          required: true
+        - label: This issue is related to the Nutrition Tracker app specifically
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 📝 Bug Summary
+      description: A clear and concise description of what the bug is
+      placeholder: The app crashes when I try to scan a barcode...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 📱 Platform
+      description: Which platform(s) are you experiencing this issue on?
+      multiple: true
+      options:
+        - iOS
+        - Android
+        - Web
+        - Desktop (Electron)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 🚨 Severity
+      description: How severe is this bug?
+      options:
+        - Critical - App crashes/unusable
+        - High - Major feature broken
+        - Medium - Minor feature broken
+        - Low - Cosmetic/UI issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔄 Steps to Reproduce
+      description: Step-by-step instructions to reproduce the bug
+      placeholder: |
+        1. Open the app
+        2. Navigate to 'Food Search'
+        3. Tap on barcode scanner
+        4. Point camera at barcode
+        5. App crashes
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Expected Behavior
+      description: What should happen when following the steps above?
+      placeholder: The barcode should be scanned and food information should be displayed
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: ❌ Actual Behavior
+      description: What actually happens? Include error messages if any
+      placeholder: The app crashes with a white screen and returns to home screen
+    validations:
+      required: true
+
+  - type: textarea
+    id: device-info
+    attributes:
+      label: 📱 Device Information
+      description: Please provide device details
+      placeholder: |
+        - Device: iPhone 14 Pro / Samsung Galaxy S23 / Desktop
+        - OS Version: iOS 17.1 / Android 13 / Windows 11
+        - App Version: 1.2.3
+        - Screen Size: 6.1" / 1920x1080
+        - Ram: 8GB
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 📋 Console Logs / Error Messages
+      description: Any relevant logs, error messages, or stack traces
+      placeholder: |
+        Error: Cannot read property 'camera' of undefined
+        at BarcodeScanner.componentDidMount (BarcodeScanner.js:45)
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 📸 Screenshots / Videos
+      description: If applicable, add screenshots or screen recordings to help explain the problem
+      placeholder: |
+        Drag and drop images/videos here or paste URLs:
+        - Screenshot of error screen
+        - Video showing reproduction steps
+        - Console output screenshots
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: 🔄 How often does this occur?
+      options:
+        - Always (100%)
+        - Often (75%)
+        - Sometimes (50%)
+        - Rarely (25%)
+        - Only once
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: 🛠️ Workaround
+      description: Is there a way to work around this issue?
+      placeholder: Force closing and reopening the app fixes it temporarily
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🌍 Additional Context
+      description: Any other context about the problem
+      placeholder: |
+        - This started happening after the latest update
+        - Only occurs when using dark mode
+        - Related to specific food items or barcodes
+        - Network connectivity issues
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: 📅 Regression
+      description: Did this work in a previous version?
+      options:
+        - "Yes - it worked before"
+        - "No - never worked"
+        - "Not sure"
+
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: 🤝 Contribution
+      description: Would you like to help fix this issue?
+      options:
+        - label: I'd be willing to submit a PR to fix this issue
+        - label: I'd be willing to test the fix once available
+        - label: I'd like to be notified when this is resolved
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## 🚀 What happens next?
+        
+        1. **🏷️ Triage** - Our team will review and label this issue
+        2. **📋 Investigation** - We'll investigate the root cause
+        3. **🔧 Fix** - A fix will be developed and tested
+        4. **📦 Release** - The fix will be included in the next release
+        5. **✅ Verification** - We'll verify the fix resolves the issue
+        
+        Thank you for helping make Nutrition Tracker better! 🙏 

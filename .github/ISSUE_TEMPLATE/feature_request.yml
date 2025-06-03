@@ -1,0 +1,250 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[FEATURE] "
+labels: ["enhancement", "needs triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! 🚀
+        
+        We love hearing from our community and your ideas help make Nutrition Tracker better for everyone.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-flight Checklist
+      description: Please confirm you have completed these steps
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested
+          required: true
+        - label: I have read the [Contributing Guidelines](../../CONTRIBUTING.md)
+          required: true
+        - label: This feature request is related to the Nutrition Tracker app
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 🎯 Feature Summary
+      description: A clear and concise description of the feature you'd like to see
+      placeholder: Add meal planning functionality with weekly meal prep suggestions...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 📂 Feature Category
+      description: Which category does this feature belong to?
+      options:
+        - 🍎 Nutrition Tracking
+        - 🔍 Food Search & Database
+        - 📊 Analytics & Reports
+        - 🎯 Goal Setting & Progress
+        - 🍽️ Meal Planning
+        - 📱 User Interface & Experience
+        - 🔔 Notifications & Reminders
+        - ☁️ Data Sync & Backup
+        - 🏥 Health Integrations
+        - 🔐 Privacy & Security
+        - 🌐 Social Features
+        - 🤖 AI & Machine Learning
+        - 📸 Camera & Scanning
+        - ⚙️ Settings & Customization
+        - 🔧 Developer Tools
+        - 🌍 Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🚀 Priority Level
+      description: How important is this feature to you?
+      options:
+        - Critical - Essential for app usage
+        - High - Would significantly improve experience
+        - Medium - Nice to have enhancement
+        - Low - Minor improvement
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🎯 Problem Statement
+      description: What problem does this feature solve? What pain point are you experiencing?
+      placeholder: |
+        Currently, I have to manually plan my meals each week which takes a lot of time.
+        I often forget what I planned to eat and end up making unhealthy choices...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: Describe your ideal solution in detail
+      placeholder: |
+        Add a meal planning section where users can:
+        - Plan meals for the entire week
+        - Get AI-powered meal suggestions based on nutrition goals
+        - Generate shopping lists from meal plans
+        - Set reminders for meal prep
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: 📱 Target Platforms
+      description: Which platforms should this feature be available on?
+      multiple: true
+      options:
+        - iOS
+        - Android
+        - Web
+        - All platforms
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternative Solutions
+      description: Have you considered any alternative approaches or workarounds?
+      placeholder: |
+        - Using external meal planning apps (but then data isn't integrated)
+        - Manual spreadsheet tracking (too time consuming)
+        - Setting calendar reminders (not nutrition-focused)
+
+  - type: textarea
+    id: user-stories
+    attributes:
+      label: 👤 User Stories
+      description: Describe how different users would interact with this feature
+      placeholder: |
+        **As a busy professional:**
+        - I want to quickly plan healthy meals for the week
+        - So that I can maintain my nutrition goals without spending hours planning
+        
+        **As a fitness enthusiast:**
+        - I want meal suggestions that match my macro targets
+        - So that I can optimize my nutrition for my training schedule
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: ✅ Acceptance Criteria
+      description: What specific requirements must this feature meet to be considered complete?
+      placeholder: |
+        - [ ] User can create meal plans for 1-4 weeks in advance
+        - [ ] System suggests meals based on nutrition goals
+        - [ ] User can save favorite meal combinations
+        - [ ] Shopping list can be generated from meal plan
+        - [ ] Meal plans sync across devices
+        - [ ] User can share meal plans with family/friends
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: 🎨 Mockups / Wireframes
+      description: If you have any visual ideas, sketches, or examples from other apps
+      placeholder: |
+        Attach images or provide links to similar features in other apps:
+        - MyFitnessPal meal planning
+        - Mealime app interface
+        - Custom sketches or wireframes
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: 🔧 Implementation Complexity
+      description: How complex do you think this feature would be to implement?
+      options:
+        - Simple - Basic functionality, minimal UI changes
+        - Medium - Moderate complexity, some new components
+        - Complex - Significant development, new architecture
+        - Very Complex - Major feature requiring extensive development
+        - Not sure
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: 🔗 Dependencies
+      description: Are there any other features or external services this would depend on?
+      placeholder: |
+        - Requires recipe database integration
+        - Needs push notification system
+        - Might need third-party meal planning API
+        - Depends on user authentication system
+
+  - type: checkboxes
+    id: integrations
+    attributes:
+      label: 🌐 Desired Integrations
+      description: What external services or apps should this integrate with?
+      options:
+        - label: Apple Health / Google Fit
+        - label: Grocery delivery services (Instacart, Amazon Fresh)
+        - label: Recipe websites (Allrecipes, Food Network)
+        - label: Calendar apps (Google Calendar, Apple Calendar)
+        - label: Fitness tracking apps (Strava, Fitbit)
+        - label: Smart home devices (Alexa, Google Home)
+        - label: Social media sharing
+        - label: None needed
+
+  - type: textarea
+    id: business-value
+    attributes:
+      label: 📈 Business Value
+      description: How would this feature benefit the app and its users?
+      placeholder: |
+        - Increase user engagement and retention
+        - Differentiate from competitors
+        - Enable premium feature monetization
+        - Improve user health outcomes
+        - Generate affiliate revenue from grocery partnerships
+
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: 🤝 Contribution
+      description: How can you help make this feature a reality?
+      options:
+        - label: I can help with design mockups
+        - label: I can help with user research and testing
+        - label: I can contribute code implementation
+        - label: I can help with documentation
+        - label: I can provide ongoing feature feedback
+        - label: I can beta test the feature
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 🌍 Additional Context
+      description: Any other information that might be helpful
+      placeholder: |
+        - Links to similar features in other apps
+        - Research studies supporting this feature
+        - User feedback or survey data
+        - Technical considerations or constraints
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## 🚀 What happens next?
+        
+        1. **🏷️ Community Review** - The community can upvote and discuss your idea
+        2. **📋 Triage** - Our team will review and prioritize the request
+        3. **📝 Planning** - If approved, we'll create detailed specifications
+        4. **🔧 Development** - The feature will be developed and tested
+        5. **📦 Release** - The feature will be included in a future release
+        6. **📊 Feedback** - We'll gather user feedback on the implementation
+        
+        Thank you for helping shape the future of Nutrition Tracker! 🌟 

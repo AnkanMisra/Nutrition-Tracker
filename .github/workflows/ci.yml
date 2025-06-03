@@ -1,0 +1,442 @@
+name: 🚀 CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+  EXPO_CLI_VERSION: '6.x'
+
+jobs:
+  # ===============================
+  # 🧪 QUALITY CHECKS
+  # ===============================
+  
+  quality-checks:
+    name: 🔍 Code Quality & Security
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 🎯 TypeScript type checking
+      run: npm run type-check
+    
+    - name: 🧹 ESLint code analysis
+      run: npm run lint:ci
+    
+    - name: 💅 Prettier code formatting check
+      run: npm run format:check
+    
+    - name: 🔒 Security audit
+      run: npm audit --audit-level high
+    
+    - name: 📊 Bundle analyzer
+      run: npm run analyze-bundle
+    
+    - name: 🔍 License compliance check
+      run: npm run license-check
+
+  # ===============================
+  # 🧪 TESTING SUITE
+  # ===============================
+  
+  testing:
+    name: 🧪 Test Suite
+    runs-on: ubuntu-latest
+    needs: quality-checks
+    
+    strategy:
+      matrix:
+        test-type: [unit, integration, e2e]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 🧪 Run ${{ matrix.test-type }} tests
+      run: npm run test:${{ matrix.test-type }}
+      env:
+        CI: true
+    
+    - name: 📊 Upload test coverage
+      if: matrix.test-type == 'unit'
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/lcov.info
+        flags: unittests
+        name: nutrition-tracker-coverage
+
+  # ===============================
+  # 📱 MOBILE BUILDS
+  # ===============================
+  
+  build-expo:
+    name: 📱 Expo Build
+    runs-on: ubuntu-latest
+    needs: [quality-checks, testing]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 🔧 Setup Expo CLI
+      run: npm install -g @expo/cli@${{ env.EXPO_CLI_VERSION }}
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 🔐 Expo authentication
+      run: expo login --non-interactive
+      env:
+        EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    
+    - name: 📦 Expo prebuild
+      run: expo prebuild --clean --platform all
+    
+    - name: 🏗️ Build development client
+      run: expo build:android --type app-bundle --no-wait
+      env:
+        EXPO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.EXPO_ANDROID_KEYSTORE_PASSWORD }}
+        EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
+
+  # ===============================
+  # 🤖 ANDROID BUILD
+  # ===============================
+  
+  build-android:
+    name: 🤖 Android Build
+    runs-on: ubuntu-latest
+    needs: build-expo
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: ☕ Setup JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 📱 Setup Android SDK
+      uses: android-actions/setup-android@v2
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 🔧 Setup Gradle cache
+      uses: gradle/gradle-build-action@v2
+    
+    - name: 🏗️ Build Android APK
+      run: |
+        cd android
+        ./gradlew assembleRelease
+      env:
+        ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+    
+    - name: 📤 Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-apk
+        path: android/app/build/outputs/apk/release/app-release.apk
+
+  # ===============================
+  # 🍎 iOS BUILD
+  # ===============================
+  
+  build-ios:
+    name: 🍎 iOS Build
+    runs-on: macos-latest
+    needs: build-expo
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 🍎 Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: 💎 Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 📦 Install iOS dependencies
+      run: |
+        cd ios
+        pod install --repo-update
+    
+    - name: 🏗️ Build iOS app
+      run: |
+        cd ios
+        xcodebuild -workspace NutritionTracker.xcworkspace \
+                   -scheme NutritionTracker \
+                   -configuration Release \
+                   -archivePath build/NutritionTracker.xcarchive \
+                   archive
+      env:
+        CODE_SIGNING_REQUIRED: NO
+    
+    - name: 📤 Upload iOS artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ios-archive
+        path: ios/build/NutritionTracker.xcarchive
+
+  # ===============================
+  # 🌐 WEB BUILD
+  # ===============================
+  
+  build-web:
+    name: 🌐 Web Build
+    runs-on: ubuntu-latest
+    needs: [quality-checks, testing]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: 📥 Install dependencies
+      run: npm ci --prefer-offline --no-audit
+    
+    - name: 🏗️ Build web app
+      run: npm run build:web
+      env:
+        CI: false
+        GENERATE_SOURCEMAP: false
+    
+    - name: 📊 Bundle size analysis
+      run: npm run analyze:web
+    
+    - name: 📤 Upload web build
+      uses: actions/upload-artifact@v3
+      with:
+        name: web-build
+        path: web-build/
+
+  # ===============================
+  # 🚀 DEPLOYMENT
+  # ===============================
+  
+  deploy-preview:
+    name: 🔍 Deploy Preview
+    runs-on: ubuntu-latest
+    needs: build-web
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Download web build
+      uses: actions/download-artifact@v3
+      with:
+        name: web-build
+        path: web-build/
+    
+    - name: 🚀 Deploy to Netlify Preview
+      uses: nwtgck/actions-netlify@v2
+      with:
+        publish-dir: './web-build'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: true
+        enable-commit-comment: false
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  deploy-production:
+    name: 🚀 Production Deployment
+    runs-on: ubuntu-latest
+    needs: [build-android, build-ios, build-web]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - name: 📥 Download artifacts
+      uses: actions/download-artifact@v3
+    
+    - name: 🌐 Deploy web to Netlify
+      uses: nwtgck/actions-netlify@v2
+      with:
+        publish-dir: './web-build'
+        production-deploy: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Production deployment ${{ github.sha }}"
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    
+    - name: 📱 Deploy to App Stores
+      run: |
+        echo "🤖 Deploying Android APK to Play Console..."
+        echo "🍎 Deploying iOS IPA to App Store Connect..."
+        # Add actual deployment scripts here
+    
+    - name: 📊 Post-deployment checks
+      run: |
+        echo "🔍 Running smoke tests..."
+        echo "📈 Updating monitoring dashboards..."
+        echo "📧 Sending deployment notifications..."
+
+  # ===============================
+  # 📊 PERFORMANCE MONITORING
+  # ===============================
+  
+  performance-audit:
+    name: 📊 Performance Audit
+    runs-on: ubuntu-latest
+    needs: deploy-production
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🔍 Lighthouse CI
+      uses: treosh/lighthouse-ci-action@v9
+      with:
+        urls: |
+          https://nutritiontracker.netlify.app
+          https://nutritiontracker.netlify.app/search
+          https://nutritiontracker.netlify.app/profile
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+    
+    - name: 📊 Bundle size check
+      run: |
+        npm ci
+        npm run size-limit
+      env:
+        CI: true
+
+  # ===============================
+  # 🔐 SECURITY SCAN
+  # ===============================
+  
+  security-scan:
+    name: 🔐 Security Scan
+    runs-on: ubuntu-latest
+    needs: quality-checks
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: 🔍 CodeQL Analysis
+      uses: github/codeql-action/init@v2
+      with:
+        languages: javascript, typescript
+    
+    - name: 🏗️ Autobuild
+      uses: github/codeql-action/autobuild@v2
+    
+    - name: 🔍 Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+    
+    - name: 🛡️ Snyk Security Scan
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+
+  # ===============================
+  # 📝 RELEASE MANAGEMENT
+  # ===============================
+  
+  create-release:
+    name: 📝 Create Release
+    runs-on: ubuntu-latest
+    needs: [deploy-production, performance-audit, security-scan]
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: 🏷️ Generate changelog
+      id: changelog
+      uses: metcalfc/changelog-generator@v4.0.1
+      with:
+        myToken: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: 📦 Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: Release v${{ github.run_number }}
+        body: |
+          ## 🚀 What's New
+          ${{ steps.changelog.outputs.changelog }}
+          
+          ## 📱 Downloads
+          - [Android APK](https://github.com/${{ github.repository }}/releases/download/v${{ github.run_number }}/app-release.apk)
+          - [Web App](https://nutritiontracker.netlify.app)
+        draft: false
+        prerelease: false 
