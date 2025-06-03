@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="100"/>
+<img src="./assets/icon.png" alt="Nutrition Tracker Logo" width="300"/>
 
 </div>
 
